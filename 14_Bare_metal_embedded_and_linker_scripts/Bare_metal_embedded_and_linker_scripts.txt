@@ -1,0 +1,28 @@
+Cross compilation and Toolchains
+coss-compilation is a process in which the cross-toolchain runs on the host machine(PC) and creates executables that run on different machine(ARM)
+Toolchain or a cross-compilation toolchain is a collection of binaries which allows you to compile, assemble, link your applications
+it also contains binaries to debug the application on the target
+Toolchain also comes with other binaries which help you to analyze the executables
+ - dissect different sections of the executable
+ - disassemble
+ - extract symbol and size information
+ - convert executable to other formats such as bin, ihex
+ - provides 'c' standard libraries
+Toolchain: GNU tools for ARM embedded processors
+
+Complier process
+main.c -Pre-processor-> main.i -compiler-> main.s -assembiler-> main.o -linker(add other lib file .a)-> main.elf -obj tool-> .ihex .bin .exe (target)
+
+analyzing .o file (Relocatable object files)
+- main.o is in elf format(executable and linkable format)
+- elf is a standard file format for object files and executable file when use GCC
+- a file format standard describes a way of organizing various elements(data, read only data, code, uninitialized data, etc.) of program in different sections
+
+Other file formats
+- the common object file format (COFF) : introduced by unix system V
+- Arm image Format (AIF): introduced by ARM
+- SRECORD : introduced by Motorola
+
+ linker and locator
+- Use the linker to merge similar sections of different object files and to resolve and undefined symbols of different object files
+- Locator(par of linker) takes the help of a linker script to understand how you wish to merge different sections and assigns mentioned addresses to different sections

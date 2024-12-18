@@ -1,0 +1,42 @@
+Operational mode of the processor
+================================================================
+M0/M3/M4
+
+processor gives 2 operational modes: Thread mode and handler mode
+
+1 all your application code will execute under "The thread mode" of the processor . this is also caller as "User Mode".
+2 all the exception and interrupt handlers will run under the "Handler Mode" 
+3 processor always starts with "Thread Mode"
+4 whenever the core meets with system exception or any external interrupt the core will change its mode to "Handler Mode"
+in order to service  this ISR associated  with that system exception or the interrupt
+
+Access lever of the processor
+1; processor offer 2 access levels
+- Privileged Access Levels PAL
+- Non-Privileged Access Levels NPAL
+2; if your code is running with PAL , then your code has full access to all the processor specific resources and restricted register
+3; if your code is running with NPAL, then your code may not have access to some of the restricted register of the processor
+4; by default your code will run in PAL
+5; when the processor is in "Thread Mode", it's possible to move processor in NPAL. one you move out of the PAL to NPAL being in Thread Mode, then its not possible to come back to PAL, unless you change the processor operational mode to "Handler Mode"
+6; "Handler Mode" code execution is always with PAL
+7;use the CONTROL register of the processor if you want to switch between the access levels
+
+Cortex M Processor Core Registers
+1; R0 to R12(total 13) registers are for general purpose
+2; the R13 register is SP(stack pointer)
+3; The LR(Link register) receives the return address from PC. when you escape calling function or subprogram or exception/interrupt handler PC = LR
+4; PC(Program counter) holds the address of the next instruction to be executed
+5; all registers have 32 bit wide 
+6; Program Status register
+
+Program Status register:
+
+T bit of the EPSR
+1; Various ARM processors support ARM-Thumb interworking, that means the ability to switch between ARM and Thumb state
+2; The processor must be in ARM state to execute instructions which are from ARM ISA and the Processor must be in Thumb state to execute instructions of Thumb ISA
+3; if 'T' bit of the EPSR is set(1), processor thinks that the next instruction which it is about to execute is from Thumb ISA
+4; if 'T' bit of the EPSR is reset(0), processor thinks that the next instruction which is about to execute is from ARM ISA
+5; The cortex Mx Processor does not support the "ARM" state. Hence, the value of 'T' bit must always be 1. Failing to maintain this is illegal and this will result in the "Usage fault" exception
+6; The lsb(bit 0) of the program counter(PC) is linked to this 'T' bit. When you load a value of an address into PC the bit[0] of the value is loaded into the Tbit
+7; Hence, any address you place in the PC must be have it's 0th bit as 1.this is usually taken care by the compiler and programmers need not to worry most of the time.
+8; this is the reason why all vector addresses are incremented by 1 in the vector table 

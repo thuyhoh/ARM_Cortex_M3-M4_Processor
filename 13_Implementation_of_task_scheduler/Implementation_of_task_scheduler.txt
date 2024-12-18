@@ -1,0 +1,12 @@
+Implementing a scheduler
+- let's implement a scheduler which shedules multiple user tasks in a round-robin fashion by carrying out the context switch operation
+- Round robin scheduling method is, time slices are assigned to each task in equal portions and in circular order
+- First will use systick handler to carry out the context switch operation between multiple tasks
+- later will we change the code using PendSV handler
+
+What is a task?
+- A task is nothing but a piece of code, or you can call it a ('C') function, which does a specific job when it is allowed to run on the CPU
+- A task has its own stack to create its local variables when it runs on the CPU. Also when scheduler decides to remove a task from CPU, scheduler first saves the contex(state) of the task in task's private task.
+- So, in summary, a piece code or a function is called a task when it is scheduler and never loses its 'state' unless it is deleted permanently
+
+35p

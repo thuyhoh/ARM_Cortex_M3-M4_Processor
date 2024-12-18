@@ -1,0 +1,91 @@
+.bss(block started by symbols and .data section
+- All the uninitialized global variables and uninitialized static variables are store in the .bss section
+- Since those variables do not have any initial values, they are not required to be stored in the .data section since the .data section consumes FLASH space. Imagine what would happen if there is a large global uninitialized array in the program, and if that is kept in the .data section, it would unnecessarily consume flash space yet carries no useful information at all.
+- .bss section doesn't consume any FLASH space unlike .data section
+- you must reserve RAM space for the .bss section by knowing its size and initialize those memory space to zero. This is typically done in startup code
+- Linker helps you to determine the final size of the .bss section. So, obtain the size information from a linker script symbols 
+
+Importance of start-up file
+- The startup file is responsible for setting up the right environment for the main user code to run
+- Code written in startup file runs before main(). So, you can say startup file calls main()
+- Some part of the startup code file is the target(Processor) dependent
+- Startup code takes care of vector table placement in code memory as required by the ARM cortex Mx processor
+- Startup code may also take care of stack reinitialization
+- Startup code is responsible of .data, .bss section initialization in main memory
+
+linker scripts 
+- linker script is a text file which explains how different sections of the object files should merged to create an output file
+- linker and locator combination assigns unique absolute addresses to different sections of the output file by referring to address information mentioned in the linker script
+- linker script also includes the code and data memory address and size information
+- linker scripts are written using the GNU linker command language
+- GNU linker script has the file extension of .ld
+- you must supply linker script at the linking phase to the linker using --T option
+
+linker command
+ENTRY command
+- this command is used to set the "Entry point address" information in the header of final elf file generated
+- in our case, "Reset_Handler" is the entry point into the application. The first piece of code that executes right after the processor reset.
+- The debugger users this information to locate the first function to execute
+- Not a mandatory command to use, but required when you debug the elf file using the debugger(GDB)
+- syntax: ENTRY(_symbols_Name_)
+Memory command
+- this command allows you to describe the different memories present in the target and there start address and size information
+- The linker uses information memtioned in this command to assign addresses to merged sections
+- The information is given under this command also helps the linker to calculate total code and data memory consumed so far and throw and error message if data, code, heap or stack areas cannot fit into available size
+- By using memory command, you can fine-tune various memories available in your target and allow different sections to occupy different memory areas
+- Typically one linker script has one memory command
+- Syntax 
+MEMORY
+{
+	name(attr):ORIGIN = origin, LENGTH = len
+}
+/*
+- name: defines name of the momory region which will be later referentced by other parts of the linker scripts
+- attr : R(read-only sections) W(read and write sections) X(sections containing executable code) A(Allocated sections) I(initialized sections) L(same as 'I') !(invert the sense of any of the following attributes)
+- ORIGIN: define origin address of the memory region
+- LENGTH: define the length inforamtion
+*/
+
+Sections command 
+- SECTIONS command is used to create different output sections in the final elf executable generated
+- important command by which you can instruct the linker  how to merge the input sections to yield an output section
+- This command also controls the order in which different output sections appear in the elf file generated
+- By using this command, you also mention the placement of a section in a memory region. For example, you instruct the linker to place the .text section in the FLASH memory region, which is described by the MEMORY command
+/*  SECTIONS command
+SECTIONS
+{
+    .text:
+    {
+        .isr_vector
+        *(.text)
+        *(.rodata)
+    }> vma AT >lma
+    .data
+    {
+        *(.data)
+    }> vma AT >lma
+    .bss
+    {
+        *(.bss)
+    }> vma AT >lma
+
+    ..other section..
+
+}
+
+*(.a) merge content of .a section of all file
+lma : địa chỉ load(địa chỉ: phần MEMORY đầu tiên được lưu trữ)
+vma : ddia tri ao (khi gọi startup file từ lma nội dung có được chuyển đi dâu ko)
+
+*/
+Location counter (.)
+- This is a special linker symbol denoted by a dot '.'
+- This symbol is called "location counter" since linker automatically updates this symbol with location(address) information
+- you can use this symbol inside the linker script to track and define boundaries of various sections
+- You can also set location counter to any specific value while writing linker script
+- location counter should appear only inside the Sections command
+- The location counter is then incremented by the size of the output section
+Linker script symbol
+- A symbol is the name of an address
+- A symbol declaration is not equivalent to a variable declaration what you do in your 'C' application
+

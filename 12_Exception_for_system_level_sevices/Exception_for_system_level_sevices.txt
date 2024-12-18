@@ -1,0 +1,47 @@
+Exceptions for system-level services
+- ARM cortex Mx processor supports 2 important system-level service exceptions. SVC(SuperVisor Call) and PendSV(Pendable SerVice)
+- Supervisory calls are typically used to request privileged operations or access to system resources from an operating system
+- SVC exception is mainly used in an OS environment. For example, A less privileged user task can trigger SVC exception to get system-level services (like accessing device drivers, peripherals) from the kernel of the OS
+- PendSV is mainly used in an OS environment to carry out context switching between 2 or more tasks when no other exceptions are active in the system
+
+SVC(Supervisor Call) instruction
+- SVC is a thumb ISA instruction which causes SVC exception
+- In an RTOS scenario, user tasks can execute SVC instruction with an associated argument to make supervisory calls to seek privileged resources from the kernel code
+- Unprivileged user tasks use the SVC instruction to change the processor mode to privileged mode to access privileged resources like peripherals
+- SVC instruction is always used along with a number, which can be used to identify the request type by the kernel code
+- The SVC handler executes right after the SVC instruction (no delay. Unless a higher priority exception arrives at the same time)
+
+Methods to trigger SVC exception 
+there are two ways 
+- Direct execution of SVC instruction with an immediate value: SVC #i (i = 0-255)
+- Setting the exception pending bit in "System Handler Control and State Register"(uncommon)
+
+How extract the SVC number
+- The SVC instruction has an number embedded within it, often referred to as the SVC number
+- In the SVC handler, you should fetch the opcode of the SVC instruction and then extract the SVC number
+- to fetch the opcode of SVC instruction from program memory, we should have the value of PC(return address) where the user code had interrupt while triggering the SVC exception
+- The value of the Pc(return address) where the user code had interrupted is stored in
+the stack as a part of exception entry sequence by the processor
+
+PendSV Exception
+- It is an exception type 14 and has a programmable priority level
+- This exception is triggered by setting its pending status by writing to the "Interrupt Control and State Register" of processor
+- Triggering a pendSV system exception is a way of invoking the pre-emptive kernel to carry out the context switch in a OS environment
+- In an OS environment, PendSV handler is set to the lowest priority level, and the PendSV handler came out the context switch operation
+
+Typical use of PendSV
+- Typically this exception is triggered inside a higher priority exception handler, and it gets executed when the higher priority handler finishes
+- Using this characteristic, we can schedule the PendSV exception handler to be executed after all the other interrupt processing thasks are done
+- This is very useful for a context switching operation, which is a crucial operation in various OS design
+- Using PendSV in context switching will be more efficient in an interrupt noisy environment
+- In an interrupt noisy environment, and we need to delay the context switching until all IRQ are executed
+
+PendSV other use cases
+- Offloading interrupt processing
+- If a higher priority handler is doing time-consuming work, then the other lower priority interrupts will suffer, and systems responsiveness may reduce. This can be solved using a combination of ISR and pendSV handler
+
+Offloading interrupt processing using PendSV
+Interrupt may be serviced in 2 halves
+1 The first half is the time critical part that needs to be executed as a part of ISR
+2 The second half is called bottom half, is basically delayed execution where rest of th time-consuming work will be done
+so, PendSV can be used in these cases, to handle the second half execution by triggering it in the first half

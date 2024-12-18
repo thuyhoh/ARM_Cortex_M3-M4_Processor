@@ -1,0 +1,10 @@
+Relation between priority value and priority
+the lesser A priority value is, the more urgent a interrupt is. 	 
+if both interrupts hit the NVIC at the same time, NVIC allows the interrupt which have the highest priority
+if 2 interrupts have same the priority value, NVIC will allows the interrupt having numbers of interrupts.
+
+Priority values are also called as priority levels
+
+in STM32F4x MCU has 16 different priority levels
+
+Configure IRQ register
