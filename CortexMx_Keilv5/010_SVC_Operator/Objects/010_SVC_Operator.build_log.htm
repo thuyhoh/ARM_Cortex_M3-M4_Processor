@@ -1,0 +1,127 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.39.0.0
+Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: nguyen trong_thuy, non, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.39.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.21
+Assembler:       Armasm.exe V6.21
+Linker/Locator:  ArmLink.exe V6.21
+Library Manager: ArmAr.exe V6.21
+Hex Converter:   FromElf.exe V6.21
+CPU DLL:         SARMCM3.DLL V5.39.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      UL2CM3.DLL V1.164.9.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+E:\2.Embedded\microtroller\ARM_cortex\CortexMx_Keilv5\010_SVC_Operator\010_SVC_Operator.uvprojx
+Project File Date:  07/20/2024
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.21', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+main.c(30): warning: unused parameter 'a' [-Wunused-parameter]
+   30 | int32_t add_number(int32_t a, int32_t b)
+      |                            ^
+main.c(30): warning: unused parameter 'b' [-Wunused-parameter]
+   30 | int32_t add_number(int32_t a, int32_t b)
+      |                                       ^
+main.c(37): warning: unused parameter 'a' [-Wunused-parameter]
+   37 | int32_t sub_number(int32_t a, int32_t b)
+      |                            ^
+main.c(37): warning: unused parameter 'b' [-Wunused-parameter]
+   37 | int32_t sub_number(int32_t a, int32_t b)
+      |                                       ^
+main.c(44): warning: unused parameter 'a' [-Wunused-parameter]
+   44 | int32_t mul_number(int32_t a, int32_t b)
+      |                            ^
+main.c(44): warning: unused parameter 'b' [-Wunused-parameter]
+   44 | int32_t mul_number(int32_t a, int32_t b)
+      |                                       ^
+main.c(51): warning: unused parameter 'a' [-Wunused-parameter]
+   51 | int32_t div_number(int32_t a, int32_t b)
+      |                            ^
+main.c(51): warning: unused parameter 'b' [-Wunused-parameter]
+   51 | int32_t div_number(int32_t a, int32_t b)
+      |                                       ^
+main.c(94): warning: implicit conversion changes signedness: 'int32_t' (aka 'int') to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+   94 |         pBaseOfStackFrame[0] = res;
+      |                              ~ ^~~
+main.c(73): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+   73 |         uint8_t svc_num =  *pReturn_addr;
+      |                 ^
+main.c(94): warning: variable 'res' may be uninitialized when used here [-Wconditional-uninitialized]
+   94 |         pBaseOfStackFrame[0] = res;
+      |                                ^~~
+main.c(68): note: initialize the variable 'res' to silence this warning
+   68 |         int32_t arg0, arg1, res;
+      |                                ^
+      |                                 = 0
+main.c(97): warning: no previous prototype for function 'HardFault_Handler' [-Wmissing-prototypes]
+   97 | void HardFault_Handler(void)
+      |      ^
+main.c(97): note: declare 'static' if the function is not intended to be used outside of this translation unit
+   97 | void HardFault_Handler(void)
+      | ^
+      | static 
+main.c(13): warning: no previous extern declaration for non-static variable 'ans' [-Wmissing-variable-declarations]
+   13 | int32_t ans;
+      |         ^
+main.c(13): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+   13 | int32_t ans;
+      | ^
+main.c(69): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |         uint8_t *pReturn_addr = (uint8_t *)pBaseOfStackFrame[6];
+      |                                            ^~~~~~~~~~~~~~~~~
+main.c(71): warning: unsafe pointer arithmetic [-Wunsafe-buffer-usage]
+   71 |         pReturn_addr -= 2;
+      |         ^~~~~~~~~~~~
+main.c(76): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   76 |         arg1 = (int32_t)pBaseOfStackFrame[1];
+      |                         ^~~~~~~~~~~~~~~~~
+16 warnings generated.
+compiling main.c...
+linking...
+Program Size: Code=700 RO-data=408 RW-data=0 ZI-data=1640  
+".\Objects\010_SVC_Operator.axf" - 0 Error(s), 16 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM::CMSIS@5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F4xx_DFP.2.17.1.pack
+                Keil::STM32F4xx_DFP@2.17.1
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 2.6.3
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/_Target_1
+  C:/Users/ASUS/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/ASUS/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE@5.6.0
+
+   * Component: Keil::Device:Startup@2.6.3
+      Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

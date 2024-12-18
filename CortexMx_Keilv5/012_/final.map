@@ -1,0 +1,195 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x0001f000         xr
+SRAM             0x20000000         0x00020000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD led.o
+LOAD main.o
+LOAD stm32_startup.o
+
+.text           0x08000000      0x796
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x168 stm32_startup.o
+                0x08000000                vector
+ *(.tex)
+ *(.rodata)
+                0x08000168                        _etext = .
+ .text          0x08000168       0xfc led.o
+                0x08000168                delay
+                0x08000190                led_init_all
+                0x08000204                led_on
+                0x08000234                led_off
+ .text          0x08000264      0x520 main.o
+                0x08000264                main
+                0x08000290                idle_task
+                0x08000296                enable_processor_faults
+                0x080002d4                init_scheduler_stack
+                0x080002dc                init_tasks_stack
+                0x080003f8                get_PSP_value
+                0x08000418                update_next_task
+                0x080004a0                save_PSP_value
+                0x080004c8                witch_sp_to_PSP
+                0x080004e2                PendSVhandler_set_Priority
+                0x0800050c                PendSVhandler_active
+                0x08000530                update_global_tick_count
+                0x0800054c                unlock_tasks
+                0x080005ac                SysTick_Handler
+                0x080005c0                PendSV_Handler
+                0x080005f0                schedule
+                0x080005fc                task_delay
+                0x0800065c                task1_handler
+                0x08000680                task2_handler
+                0x080006a4                task3_handler
+                0x080006c8                task4_handler
+                0x080006ec                init_systick_timer
+                0x08000754                HardFault_Handler
+                0x08000760                MemManage_Handler
+                0x0800076c                BusFault_Handler
+                0x08000778                UsageFault_Handler
+ .text          0x08000784       0x12 stm32_startup.o
+                0x08000784                DMA1_Stream5_IQRHandler
+                0x08000784                DMA2_Stream4_IQRHandler
+                0x08000784                SVCall_Handler
+                0x08000784                DMA1_Stream3_IQRHandler
+                0x08000784                SPI3_IQRHandler
+                0x08000784                DMA2_Stream2_IQRHandler
+                0x08000784                USART1_IQRHandler
+                0x08000784                DMA2_Stream7_IQRHandler
+                0x08000784                DMA2_Stream0_IQRHandler
+                0x08000784                EXTI2_IQRHandler
+                0x08000784                TIM8_BRK_TIM12_IQRHandler
+                0x08000784                CAN2_SCE_IQRHandler
+                0x08000784                NMI_Handler
+                0x08000784                TIM8_UP_TIM13_IQRHandler
+                0x08000784                CRYP_IQRHandler
+                0x08000784                EXTI9_5_IQRHandler
+                0x08000784                I2C1_ER_IQRHandler
+                0x08000784                I2C2_EV_IQRHandler
+                0x08000784                DMA2_Stream6_IQRHandler
+                0x08000784                TIM5_IQRHandler
+                0x08000784                TIM4_IQRHandler
+                0x08000784                DCMI_IQRHandler
+                0x08000784                DMA1_Stream2_IQRHandler
+                0x08000784                I2C3_EV_IQRHandler
+                0x08000784                FLASH_IQRHandler
+                0x08000784                TOTG_HS_EP1_OUT_IQRHandler
+                0x08000784                TAMP_STAMP_IQRHandler
+                0x08000784                EXTI15_10_IQRHandler
+                0x08000784                OTG_HS_WKUP_IQRHandler
+                0x08000784                SPI1_IQRHandler
+                0x08000784                DMA1_Stream4_IQRHandler
+                0x08000784                TIM7_IQRHandler
+                0x08000784                SPI2_IQRHandler
+                0x08000784                TIM1_BRK_TIM9_IQRHandler
+                0x08000784                RCC_IQRHandler
+                0x08000784                ETH_WKUP_IQRHandler
+                0x08000784                OTG_FS_IQRHandler
+                0x08000784                CAN1_RX0_IQRHandler
+                0x08000784                Default_Handler
+                0x08000784                CAN1_TX_IQRHandler
+                0x08000784                FPU_IQRHandler
+                0x08000784                TOTG_FS_WKUP_IQRHandler
+                0x08000784                ETH_IQRHandler
+                0x08000784                EXTI4_IQRHandler
+                0x08000784                FSMC_IQRHandler
+                0x08000784                OTG_HS_IQRHandler
+                0x08000784                TIM1_UP_TIM10_IQRHandler
+                0x08000784                I2C1_EV_IQRHandler
+                0x08000784                CAN1_RX1_IQRHandler
+                0x08000784                DMA2_Stream5_IQRHandler
+                0x08000784                DMA2_Stream1_IQRHandler
+                0x08000784                OTG_HS_EP1_IN_IQRHandler
+                0x08000784                DMA1_Stream6_IQRHandler
+                0x08000784                DMA1_Stream0_IQRHandler
+                0x08000784                CAN1_SCE_IQRHandler
+                0x08000784                I2C2_ER_IQRHandler
+                0x08000784                ADC_IQRHandler
+                0x08000784                DMA2_Stream3_IQRHandler
+                0x08000784                CAN2_RX1_IQRHandler
+                0x08000784                HASH_RNG_IQRHandler
+                0x08000784                TIM1_CC_IQRHandler
+                0x08000784                RTC_WKUP_IQRHandler
+                0x08000784                TIM1_TRG_COM_TIM11_IQRHandler
+                0x08000784                EXTI0_IQRHandler
+                0x08000784                TIM2_IQRHandler
+                0x08000784                DMA1_Stream7_IQRHandler
+                0x08000784                EXTI3_IQRHandler
+                0x08000784                TIM6_DAC_IQRHandler
+                0x08000784                CAN2_RX0_IQRHandler
+                0x08000784                SDIO_IQRHandler
+                0x08000784                USART3_IQRHandler
+                0x08000784                USART6_IQRHandler
+                0x08000784                PVD_IQRHandler
+                0x08000784                EXTI1_IQRHandler
+                0x08000784                DMA1_Stream1_IQRHandler
+                0x08000784                UART5_IQRHandler
+                0x08000784                CAN2_TX_IQRHandler
+                0x08000784                WWDG_IQRHandler
+                0x08000784                RTC_Alarm_IQRHandler
+                0x08000784                DebugMonitor_Handler
+                0x08000784                I2C3_ER_IQRHandler
+                0x08000784                UART4_IQRHandler
+                0x08000784                TIM8_TRG_COM_TIM14_IQRHandler
+                0x08000784                USART2_IQRHandler
+                0x0800078a                Reset_Handler
+
+.glue_7         0x08000798        0x0
+ .glue_7        0x08000798        0x0 linker stubs
+
+.glue_7t        0x08000798        0x0
+ .glue_7t       0x08000798        0x0 linker stubs
+
+.vfp11_veneer   0x08000798        0x0
+ .vfp11_veneer  0x08000798        0x0 linker stubs
+
+.v4_bx          0x08000798        0x0
+ .v4_bx         0x08000798        0x0 linker stubs
+
+.iplt           0x08000798        0x0
+ .iplt          0x08000798        0x0 led.o
+
+.rel.dyn        0x08000798        0x0
+ .rel.iplt      0x08000798        0x0 led.o
+
+.data           0x20000000        0x1 load address 0x08000796
+                0x20000000                        _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 led.o
+ .data          0x20000000        0x1 main.o
+ .data          0x20000001        0x0 stm32_startup.o
+                0x20000001                        _edata = .
+
+.igot.plt       0x20000004        0x0 load address 0x08000797
+ .igot.plt      0x20000004        0x0 led.o
+
+.bss            0x20000004       0x54
+                0x20000004                        _sbss = .
+ *(.bss)
+ .bss           0x20000004        0x0 led.o
+ .bss           0x20000004       0x54 main.o
+ .bss           0x20000058        0x0 stm32_startup.o
+                0x20000058                        _ebss = .
+OUTPUT(final.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x45
+ .comment       0x00000000       0x45 led.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045       0x46 main.o
+ .comment       0x00000045       0x46 stm32_startup.o
+
+.ARM.attributes
+                0x00000000       0x2e
+ .ARM.attributes
+                0x00000000       0x2e led.o
+ .ARM.attributes
+                0x0000002e       0x2e main.o
+ .ARM.attributes
+                0x0000005c       0x2e stm32_startup.o
