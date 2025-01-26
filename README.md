@@ -1,6 +1,6 @@
 # Arm Cortex M3/M4
 
-## 1. Operational mode of the processor
+## I. Operational mode of the processor
 Đối với ARM core Mx có 2 lại chế độ hoạt động: Thread mode(User Mode) và Handler mode
 
 - vi sử lí luôn bắt đầu ở chế độ Thread mode:
@@ -8,7 +8,7 @@
 - chế độ handler mode chỉ được kích hoạt khi xuất hiện Exception/interrupt event:
 
 
-## 2. Access level of the processor
+## II. Access level of the processor
 - ARM cortex có 2 cấp truy cập PAL(Privileged Access Levels) và NPAL(Non-Privileged Access Levels)  
 - Nếu code thực thi ở cấp truy cập PAL, vi sử lí có thể truy cập toàn bộ nguồn dự liệu và các thanh ghi
 - Nếu code thực thi ở cấp truy cập NPAL, vi sử lí không thể truy cập một vài thanh ghi hạn chế
@@ -24,7 +24,7 @@
 -Handler Moden luôn luôn thực thi code tại PAL
 
 
-## 3. thanh ghi của Cortex Mx(32 bit)
+## III. thanh ghi của Cortex Mx(32 bit)
 - Các thanh ghi dùng chung bao gồm R0-R12
 - Thanh ghi R13 là SP(Stack pointer) giữ địa chỉ của đầu Stack
 - LR(link register) nhận địa chỉ trả về từ PC(Program Counter). Khi thoát khỏi hàm hoặc là các ngắt (interrupts/exception) thì PC -> LR
@@ -44,12 +44,12 @@ T bit của EPSR
 
 
 
-## 4. ARM gcc inline assembly code
+## IV. ARM gcc inline assembly code
 - Inline assembly code được sử dụng để viết code assembly trong ngôn ngữ C
 
 
 
-## 5. các bước Reset của bộ xử lý ARM
+## V. các bước Reset của bộ xử lý ARM
 - Khi vi xử lý reset, PC load giá trị 0x0000_0000
 - Processor đọc giá trị địa chỉ tại địa chỉ 0x0000_0000 vào MSP(main stack pointer register) PC nhảy đến địa chỉ tếp theo(0x0000_0004) -> processor khởi tạo giá trị của stack pointer
 - sau khi Processor đọc giá trị tại 0x0000_0004 vào PC giá trị đại chỉ của reset Handler
@@ -58,7 +58,7 @@ T bit của EPSR
 - cuối cùng set gọi hàm main()
 
 
-## 6. Memory Map of the processor
+## VI. Memory Map of the processor
 
 - memory map giải thích sự ánh xạ của các thanh ghi ngoại vi và bộ nhớ 
 - Bộ xử lý, phạm vi vị trí bộ nhớ có thể định địa chỉ, phụ thuộc vào kích thước của bus địa chỉ
@@ -68,7 +68,7 @@ T bit của EPSR
 - Bộ xử lý theo mặc định sẽ lấy vector ngay sau khi reset
  *SRAM region
 
-## 7. Stack memory 
+## VII. Stack memory 
 - Stack memory là một phần của bộ nhớ chính ( RAM nội và ngoại) được dành riêng cho việc lưu chữ dữ liệu tạm thời
 - sử dụng chín trong hàm, xử lý ngắt và ngoại lệ
 - stack memory được truy cập theo kểu LIFO(last in first out). Có thể truy cập khi sử dụng PUSH và POP và được sử dụng bất kỳ hướng dẫn thao tác bộ nhớ nào LD, STR
@@ -100,10 +100,44 @@ Full Descending stack(FD)
 EX : thực hiện các lệnh
 	
 
-
-
-
-
-
 ## Stack placement
+### 1. Stack placement type
+- có 2 loại phân bố Vị trí ngăn xếp(stack) trong ứng dụng. Điều này phụ thuộc vào cấu hình trong linker file
+![image](./img/stackplacement.png)
+### 2. Stack pointer
+- Về mặt vật lý, có 2 thanh ghi con trỏ ngăn xếp trong bộ xử lý Cortex-M
+- Con trỏ ngăn xếp chính (MSP): Đây là con trỏ ngăn xếp mặc định được sử dụngsau khi đặt lại và được sử dụng cho tất cả các trình xử lý ngoại lệ/ngắt và cho
+các mã chạy ở chế độ luồng
+- Con trỏ ngăn xếp quy trình (PSP): Đây là con trỏ ngăn xếp thay thế
+chỉ có thể được sử dụng ở chế độ luồng. Nó thường được sử dụng cho
+tác vụ ứng dụng trong các hệ thống nhúng và hệ điều hành nhúng
+- Sau khi bật nguồn, bộ xử lý tự động khởi tạo MSP bằng cách
+đọc vị trí đầu tiên của bảng vectơ.
 
+### 3. chuyển đổi con trỏ ngăn xếp trong ARM
+
+
+### 4. Function call and AAPCS standard
+1. Function call
+
+2. AAPCS standard
+
+### Stack activities during interrupt and exception
+
+1. Stacking
+
+
+2. Unstacking
+
+### Stack initialization
+
+
+## System exception control registers
+### 1. ARM Cortex-M3/M4 processor peripherals
+#### System Control Block
+#### Steps to program an MCU peripheral interrupt
+#### Interrupt priority and configuration
+
+## Pending Interrupt Behavior
+### Exception Entry/Exit Sequence
+### ARM cortex M3/M4 fault handlers
